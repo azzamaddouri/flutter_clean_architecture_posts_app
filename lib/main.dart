@@ -10,6 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: appTheme);
+    return MaterialApp(debugShowCheckedModeBanner: false,theme: appTheme, home: Scaffold(appBar: AppBar()));
   }
 }
