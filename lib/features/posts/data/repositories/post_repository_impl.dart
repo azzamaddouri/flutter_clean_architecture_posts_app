@@ -11,6 +11,8 @@ import 'package:flutter_clean_architecture_posts_app/features/posts/domain/entit
 import '../../domain/repositories/posts_repository.dart';
 import '../datasources/post_local_data_source.dart';
 
+typedef Future<Unit> DeleteOrUpdateOrAddPost();
+
 class PostRepositoryImpl implements PostsRepository {
   final PostRemoteDataSource remoteDataSource;
   final PostLocalDataSource localDataSource;
@@ -45,39 +47,26 @@ class PostRepositoryImpl implements PostsRepository {
   Future<Either<Failure, Unit>> addPost(Post post) async {
     final PostModel postmodel =
         PostModel(id: post.id, title: post.title, body: post.body);
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.addPost(postmodel);
-        return const Right(unit);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(OfflineFailure());
-    }
+    return _getMessage(() => remoteDataSource.addPost(postmodel));
   }
 
   @override
   Future<Either<Failure, Unit>> deletePost(int id) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.deletePost(id);
-        return const Right(unit);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(OfflineFailure());
-    }
+    return await _getMessage(() => remoteDataSource.deletePost(id));
   }
 
   @override
-  Future<Either<Failure, Unit>> updatePost(Post post) async{
-     final PostModel postmodel =
+  Future<Either<Failure, Unit>> updatePost(Post post) async {
+    final PostModel postmodel =
         PostModel(id: post.id, title: post.title, body: post.body);
+    return await _getMessage(() => remoteDataSource.updatePost(postmodel));
+  }
+
+  Future<Either<Failure, Unit>> _getMessage(
+      DeleteOrUpdateOrAddPost deleteOrUpdateOrAddPost) async {
     if (await networkInfo.isConnected) {
       try {
-        await remoteDataSource.updatePost(postmodel);
+        await deleteOrUpdateOrAddPost();
         return const Right(unit);
       } on ServerException {
         return Left(ServerFailure());
