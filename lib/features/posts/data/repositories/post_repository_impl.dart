@@ -1,23 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:flutter_clean_architecture_posts_app/core/network/network_info.dart';
-import 'package:flutter_clean_architecture_posts_app/core/strings/exception.dart';
-
-import 'package:flutter_clean_architecture_posts_app/core/strings/failures.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/data/datasources/post_remote_data_source.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/data/models/post_model.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/domain/entities/post_entity.dart';
 
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
 import '../../domain/repositories/posts_repository.dart';
 import '../datasources/post_local_data_source.dart';
 
 typedef Future<Unit> DeleteOrUpdateOrAddPost();
 
-class PostRepositoryImpl implements PostsRepository {
+class PostsRepositoryImpl implements PostsRepository {
   final PostRemoteDataSource remoteDataSource;
   final PostLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
-  PostRepositoryImpl({
+  PostsRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
