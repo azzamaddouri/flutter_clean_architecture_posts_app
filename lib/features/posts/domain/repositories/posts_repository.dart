@@ -1,4 +1,4 @@
-import 'package:flutter_clean_architecture_posts_app/core/strings/failures.dart';
+import 'package:flutter_clean_architecture_posts_app/core/error/failures.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/domain/entities/post_entity.dart';
 import 'package:dartz/dartz.dart';
 

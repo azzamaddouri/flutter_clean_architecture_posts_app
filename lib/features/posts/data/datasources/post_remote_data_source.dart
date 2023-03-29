@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_posts_app/core/strings/exception.dart';
+import 'package:flutter_clean_architecture_posts_app/core/error/exception.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/post_model.dart';
