@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter_clean_architecture_posts_app/core/error/exception.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/data/models/post_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PostLocalDataSource {
   Future<List<PostModel>> getCachedPosts();
@@ -13,7 +15,9 @@ abstract class PostLocalDataSource {
 class PostLocalDataSourceImpl implements PostLocalDataSource {
   final SharedPreferences sharedPreferences;
 
-  PostLocalDataSourceImpl(this.sharedPreferences);
+  PostLocalDataSourceImpl({
+    required this.sharedPreferences,
+  });
 
   @override
   Future<Unit> cachePosts(List<PostModel> postModels) {
