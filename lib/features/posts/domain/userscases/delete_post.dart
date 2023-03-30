@@ -3,9 +3,9 @@ import 'package:flutter_clean_architecture_posts_app/features/posts/domain/repos
 
 import '../../../../core/error/failures.dart';
 
-class DeletePostUserCase {
+class DeletePostUseCase {
   final PostsRepository repository;
-  DeletePostUserCase(this.repository);
+  DeletePostUseCase(this.repository);
   Future<Either<Failure,Unit>> call(int postId)async{
 return await repository.deletePost(postId);
   }

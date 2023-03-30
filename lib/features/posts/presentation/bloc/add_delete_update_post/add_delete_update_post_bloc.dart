@@ -17,7 +17,7 @@ class AddDeleteUpdatePostBloc
     extends Bloc<AddDeleteUpdatePostEvent, AddDeleteUpdatePostState> {
   final AddPostUseCase addPost;
   final UpdatePostUseCase updatePost;
-  final DeletePostUserCase deletePost;
+  final DeletePostUseCase deletePost;
   AddDeleteUpdatePostBloc(
       {required this.addPost,
       required this.updatePost,

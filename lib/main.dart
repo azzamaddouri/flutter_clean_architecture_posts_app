@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                   remoteDataSource: PostRemoteDataSourceImpl(client: Client()),
                   networkInfo: NetworkInfoImpl(InternetConnectionChecker()),
                 )),
-                deletePost: DeletePostUserCase(PostsRepositoryImpl(
+                deletePost: DeletePostUseCase(PostsRepositoryImpl(
                   localDataSource: PostLocalDataSourceImpl(
                       sharedPreferences: sharedPreferences),
                   remoteDataSource: PostRemoteDataSourceImpl(client: Client()),
