@@ -3,6 +3,7 @@ import 'package:flutter_clean_architecture_posts_app/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/posts/posts_bloc.dart';
+import 'features/posts/presentation/pages/posts_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -59,6 +60,6 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: appTheme,
-            home: Scaffold(appBar: AppBar())));
+            home:PostsPage()));
   }
 }
