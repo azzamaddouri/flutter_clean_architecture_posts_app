@@ -21,12 +21,15 @@ class PostsPage extends StatelessWidget {
   Widget _buildBody() {
     return Padding(
         padding: const EdgeInsets.all(10),
-        child: BlocBuilder<PostsBloc,PostsState>(builder: ((context, state) {
+        child: BlocBuilder<PostsBloc, PostsState>(builder: ((context, state) {
           if (state is LoadingPostsState) {
             //LoadingWidget is used by many features that's why it's implemented in the core folder
             return const LoadingWidget();
           } else if (state is LoadedPostsState) {
-            return PostListWidget(posts: state.posts);
+            return RefreshIndicator(
+              child: PostListWidget(posts: state.posts),
+              onRefresh:()=> _onRefresh(context),
+            );
           } else if (state is ErrorPostsState) {
             return MessageDisplayWidget(message: state.message);
           }
@@ -36,5 +39,9 @@ class PostsPage extends StatelessWidget {
 
   Widget _buildFloatingBtn() {
     return FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add));
+  }
+
+  Future<void> _onRefresh(BuildContext context) async{
+    BlocProvider.of<PostsBloc>(context).add(RefreshPostsEvent());
   }
 }
