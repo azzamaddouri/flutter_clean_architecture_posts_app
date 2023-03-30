@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture_posts_app/core/network/network_info.dart';
 import 'package:flutter_clean_architecture_posts_app/core/theme/app_theme.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/data/datasources/post_local_data_source.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/data/datasources/post_remote_data_source.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/data/repositories/post_repository_impl.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/domain/userscases/add_post.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/domain/userscases/delete_post.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/domain/userscases/get_all_posts.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/domain/userscases/update_post.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'features/posts/presentation/bloc/posts/posts_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/posts/posts_bloc.dart';
+import 'injection_container.dart' as di;
 
 void main() async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  runApp(MyApp(sharedPreferences: sharedPreferences));
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  /*  SharedPreferences sharedPreferences = await SharedPreferences.getInstance(); */
+  runApp(MyApp(/* sharedPreferences: sharedPreferences */));
 }
 
 class MyApp extends StatelessWidget {
-  final SharedPreferences sharedPreferences;
-  const MyApp({super.key, required this.sharedPreferences});
+  /*  final SharedPreferences sharedPreferences; */
+  const MyApp({
+    super.key,
+    /* required this.sharedPreferences */
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
+          BlocProvider(create: (_)=>di.sl<PostsBloc>()),
+          BlocProvider(create: (_)=>di.sl<AddDeleteUpdatePostBloc>())
+          /* It's correct but not clean : BlocProvider(
             create: (context) => PostsBloc(
                 getAllPosts: GetAllPostsUseCase(PostsRepositoryImpl(
               localDataSource:
@@ -57,7 +54,7 @@ class MyApp extends StatelessWidget {
                   remoteDataSource: PostRemoteDataSourceImpl(client: Client()),
                   networkInfo: NetworkInfoImpl(InternetConnectionChecker()),
                 ))),
-          ),
+          ), */
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
