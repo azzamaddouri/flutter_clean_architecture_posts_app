@@ -17,7 +17,7 @@ class PostListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return ListTile(
           leading: Text(posts[index].id.toString()),
-          title: Text(posts[index].id.toString(),
+          title: Text(posts[index].title,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           subtitle: Text(
             posts[index].body,

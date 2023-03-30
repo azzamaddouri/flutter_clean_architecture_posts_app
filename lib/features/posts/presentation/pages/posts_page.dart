@@ -11,22 +11,30 @@ class PostsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
+    return Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        floatingActionButton: _buildFloatingBtn());
   }
 
-  AppBar _buildAppBar() => AppBar(title: Text("Posts"));
+  AppBar _buildAppBar() => AppBar(title: const Text("Posts"));
   Widget _buildBody() {
     return Padding(
         padding: const EdgeInsets.all(10),
-        child: BlocBuilder(builder: ((context, state) {
-          if (state is LoadingPostsState) { //LoadingWidget is used by many features that's why it's implemented in the core folder
-            return LoadingWidget();
+        child: BlocBuilder<PostsBloc,PostsState>(builder: ((context, state) {
+          if (state is LoadingPostsState) {
+            //LoadingWidget is used by many features that's why it's implemented in the core folder
+            return const LoadingWidget();
           } else if (state is LoadedPostsState) {
             return PostListWidget(posts: state.posts);
           } else if (state is ErrorPostsState) {
             return MessageDisplayWidget(message: state.message);
           }
-          return LoadingWidget();
+          return const LoadingWidget();
         })));
+  }
+
+  Widget _buildFloatingBtn() {
+    return FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add));
   }
 }

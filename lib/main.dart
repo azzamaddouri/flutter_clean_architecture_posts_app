@@ -15,17 +15,19 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   /*  final SharedPreferences sharedPreferences; */
-  const MyApp({
+ /*  const MyApp({
     super.key,
     /* required this.sharedPreferences */
-  });
+  }); */
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_)=>di.sl<PostsBloc>()),
-          BlocProvider(create: (_)=>di.sl<AddDeleteUpdatePostBloc>())
+          BlocProvider(
+              create: (_) => di.sl<PostsBloc>()
+                ..add(GetAllPostsEvent() /* Start the app with an event  */)),
+          BlocProvider(create: (_) => di.sl<AddDeleteUpdatePostBloc>())
           /* It's correct but not clean : BlocProvider(
             create: (context) => PostsBloc(
                 getAllPosts: GetAllPostsUseCase(PostsRepositoryImpl(
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: appTheme,
-            home:PostsPage()));
+            title: 'Posts App',
+            home: PostsPage()));
   }
 }
