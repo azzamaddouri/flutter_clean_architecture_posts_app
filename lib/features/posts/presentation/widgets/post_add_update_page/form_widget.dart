@@ -38,8 +38,31 @@ class _FormWidgetState extends State<FormWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextField(),
-            TextField(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: TextFormField(
+                controller: _titleController,
+                validator: (value) =>
+                    value!.isEmpty ? "Title can't be empty" : null,
+                decoration: InputDecoration(hintText: "Title"),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: TextFormField(
+                controller: _bodyController,
+                validator: (value) =>
+                    value!.isEmpty ? "Body can't be empty" : null,
+                decoration: InputDecoration(hintText: "Body"),
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: widget.isUpdatePost ? Icon(Icons.edit) : Icon(Icons.add),
+              label: Text(
+                widget.isUpdatePost ? "Update" : "Add",
+              ),
+            )
           ],
         ));
   }

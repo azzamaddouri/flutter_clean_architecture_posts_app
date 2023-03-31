@@ -20,14 +20,14 @@ class PostAddUpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(), body: _buildBody(context));
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
   }
 
   AppBar _buildAppBar() {
     return AppBar(title: Text(isUpdatePost ? "EditPost" : "Add Post"));
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Center(
         child: Padding(
             padding: const EdgeInsets.all(10),
