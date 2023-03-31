@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_add_update_page/text_form_field_widget.dart';
 
 import '../../../domain/entities/post_entity.dart';
 
@@ -58,26 +59,10 @@ class _FormWidgetState extends State<FormWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: TextFormField(
-                controller: _titleController,
-                validator: (value) =>
-                    value!.isEmpty ? "Title can't be empty" : null,
-                decoration: InputDecoration(hintText: "Title"),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: TextFormField(
-                controller: _bodyController,
-                validator: (value) =>
-                    value!.isEmpty ? "Body can't be empty" : null,
-                decoration: InputDecoration(hintText: "Body"),
-                minLines: 6,
-                maxLines: 6,
-              ),
-            ),
+            TextFormFieldWidget(
+                name: "Title", multiLines: false, controller: _titleController),
+            TextFormFieldWidget(
+                name: "Body", multiLines: true, controller: _bodyController),
             ElevatedButton.icon(
               onPressed: validateFormThenUpdateOrAddPost,
               icon: widget.isUpdatePost ? Icon(Icons.edit) : Icon(Icons.add),
