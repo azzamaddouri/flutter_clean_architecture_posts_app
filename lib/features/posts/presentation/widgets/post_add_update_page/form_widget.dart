@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_add_update_page/form_submit_btn.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_add_update_page/text_form_field_widget.dart';
 
 import '../../../domain/entities/post_entity.dart';
@@ -33,6 +34,25 @@ class _FormWidgetState extends State<FormWidget> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextFormFieldWidget(
+                name: "Title", multiLines: false, controller: _titleController),
+            TextFormFieldWidget(
+                name: "Body", multiLines: true, controller: _bodyController),
+            FormSubmitBtn(
+                isUpdatePost: widget.isUpdatePost,
+                onPressed: validateFormThenUpdateOrAddPost)
+          ],
+        ));
+  }
+
   void validateFormThenUpdateOrAddPost() {
     //Verify if the form's input fields are validated
     final isValid = _formKey.currentState!.validate();
@@ -49,28 +69,5 @@ class _FormWidgetState extends State<FormWidget> {
             .add(AddPostEvent(post: post));
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextFormFieldWidget(
-                name: "Title", multiLines: false, controller: _titleController),
-            TextFormFieldWidget(
-                name: "Body", multiLines: true, controller: _bodyController),
-            ElevatedButton.icon(
-              onPressed: validateFormThenUpdateOrAddPost,
-              icon: widget.isUpdatePost ? Icon(Icons.edit) : Icon(Icons.add),
-              label: Text(
-                widget.isUpdatePost ? "Update" : "Add",
-              ),
-            )
-          ],
-        ));
   }
 }
