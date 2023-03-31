@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 
 import '../../../domain/entities/post_entity.dart';
 
@@ -30,6 +32,24 @@ class _FormWidgetState extends State<FormWidget> {
     super.initState();
   }
 
+  void validateFormThenUpdateOrAddPost() {
+    //Verify if the form's input fields are validated
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      final post = Post(
+          id: widget.isUpdatePost ? widget.post!.id : 0,
+          title: _titleController.text,
+          body: _bodyController.text);
+      if (widget.isUpdatePost) {
+        BlocProvider.of<AddDeleteUpdatePostBloc>(context)
+            .add(UpdatePostEvent(post: post));
+      } else {
+        BlocProvider.of<AddDeleteUpdatePostBloc>(context)
+            .add(AddPostEvent(post: post));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -54,10 +74,12 @@ class _FormWidgetState extends State<FormWidget> {
                 validator: (value) =>
                     value!.isEmpty ? "Body can't be empty" : null,
                 decoration: InputDecoration(hintText: "Body"),
+                minLines: 6,
+                maxLines: 6,
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: validateFormThenUpdateOrAddPost,
               icon: widget.isUpdatePost ? Icon(Icons.edit) : Icon(Icons.add),
               label: Text(
                 widget.isUpdatePost ? "Update" : "Add",

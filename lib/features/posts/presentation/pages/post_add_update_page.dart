@@ -48,9 +48,8 @@ class PostAddUpdatePage extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is LoadingAddDeleteUpdatePostState) {
-                  return const LoadingWidget();
+                  return LoadingWidget();
                 }
-               
                 return FormWidget(
                     isUpdatePost: isUpdatePost,
                     post: isUpdatePost ? post : null);
