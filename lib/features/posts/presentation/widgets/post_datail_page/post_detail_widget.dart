@@ -6,6 +6,7 @@ import 'package:flutter_clean_architecture_posts_app/features/posts/presentation
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/post_add_update_page.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/posts_page.dart';
 
+import '../../../../../core/widgets/loading_widget.dart';
 import '../../../domain/entities/post_entity.dart';
 
 class PageDetailWidget extends StatelessWidget {
@@ -76,9 +77,16 @@ class PageDetailWidget extends StatelessWidget {
                     (route) => false);
               } else if (state is ErrorAddDeleteUpdatePostState) {
                 Navigator.of(context).pop();
+                SnackBarMessage().showErrorSnackBar(
+                    message: state.message, context: context);
               }
             },
             builder: (context, state) {
+              if (state is LoadingAddDeleteUpdatePostState) {
+                return AlertDialog(
+                  title: LoadingWidget(),
+                );
+              }
               return Container();
             },
           );
