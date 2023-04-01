@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/post_entity.dart';
+import '../widgets/post_datail_page/post_detail_widget.dart';
 
 class PostDetailPage extends StatefulWidget {
   final Post post;
@@ -17,9 +18,16 @@ class PostDetailPage extends StatefulWidget {
 class _PostDetailPageState extends State<PostDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
       title: Text("Post Detail"),
-    ));
+    );
+  }
+
+  Widget _buildBody() {
+    return Center(child: Padding(padding: EdgeInsets.all(10) , child:PageDetailWidget()));
   }
 }
