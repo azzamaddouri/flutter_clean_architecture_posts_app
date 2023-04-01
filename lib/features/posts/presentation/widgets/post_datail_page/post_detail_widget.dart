@@ -5,6 +5,7 @@ import 'package:flutter_clean_architecture_posts_app/core/util/snackbar_message.
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/post_add_update_page.dart';
 import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/posts_page.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_datail_page/delete_dialog_widget.dart';
 
 import '../../../../../core/widgets/loading_widget.dart';
 import '../../../domain/entities/post_entity.dart';
@@ -48,7 +49,7 @@ class PageDetailWidget extends StatelessWidget {
                   icon: Icon(Icons.edit),
                   label: Text("Edit")),
               ElevatedButton.icon(
-                onPressed: deleteDialog,
+                onPressed: ()=> deleteDialog(context),
                 icon: Icon(Icons.delete_outlined),
                 label: Text("Delete"),
                 style: ButtonStyle(
@@ -87,7 +88,7 @@ class PageDetailWidget extends StatelessWidget {
                   title: LoadingWidget(),
                 );
               }
-              return Container();
+              return DeleteDialogWidget(postId:post.id);
             },
           );
         });
