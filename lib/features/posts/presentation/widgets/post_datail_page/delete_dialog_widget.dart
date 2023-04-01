@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 
 class DeleteDialogWidget extends StatelessWidget {
   final int postId;
@@ -10,6 +12,25 @@ class DeleteDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return AlertDialog(
+      title: Text(
+        "Are you sure ?",
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("No"),
+        ),
+        TextButton(
+          onPressed: () {
+            BlocProvider.of<AddDeleteUpdatePostBloc>(context)
+                .add(DeletePostEvent(postId: postId));
+          },
+          child: Text("Yes"),
+        ),
+      ],
+    );
   }
 }

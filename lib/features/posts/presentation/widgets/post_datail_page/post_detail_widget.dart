@@ -1,13 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_posts_app/core/util/snackbar_message.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/post_add_update_page.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/posts_page.dart';
-import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_datail_page/delete_dialog_widget.dart';
 
-import '../../../../../core/widgets/loading_widget.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_datail_page/delete_post_btn.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/widgets/post_datail_page/update_post_btn_widget.dart';
+
 import '../../../domain/entities/post_entity.dart';
 
 class PageDetailWidget extends StatelessWidget {
@@ -38,59 +34,12 @@ class PageDetailWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => PostAddUpdatePage(
-                                isUpdatePost: true, post: post)));
-                  },
-                  icon: Icon(Icons.edit),
-                  label: Text("Edit")),
-              ElevatedButton.icon(
-                onPressed: ()=> deleteDialog(context),
-                icon: Icon(Icons.delete_outlined),
-                label: Text("Delete"),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blueAccent)),
-              )
+              UpdatePostBtnWidget(post: post),
+              DeletePostBtnWidget(postId: post.id!),
             ],
           )
         ],
       ),
     );
-  }
-
-  void deleteDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return BlocConsumer<AddDeleteUpdatePostBloc,
-              AddDeleteUpdatePostState>(
-            listener: (context, state) {
-              if (state is MessageAddDeleteUpdatePostState) {
-                SnackBarMessage().showErrorSnackBar(
-                    message: state.message, context: context);
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => PostsPage()),
-                    (route) => false);
-              } else if (state is ErrorAddDeleteUpdatePostState) {
-                Navigator.of(context).pop();
-                SnackBarMessage().showErrorSnackBar(
-                    message: state.message, context: context);
-              }
-            },
-            builder: (context, state) {
-              if (state is LoadingAddDeleteUpdatePostState) {
-                return AlertDialog(
-                  title: LoadingWidget(),
-                );
-              }
-              return DeleteDialogWidget(postId:post.id!);
-            },
-          );
-        });
   }
 }
