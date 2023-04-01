@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture_posts_app/features/posts/presentation/pages/post_detail_page.dart';
 
 import '../../../domain/entities/post_entity.dart';
-
 
 class PostListWidget extends StatelessWidget {
   final List<Post> posts;
@@ -19,13 +19,19 @@ class PostListWidget extends StatelessWidget {
         return ListTile(
           leading: Text(posts[index].id.toString()),
           title: Text(posts[index].title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           subtitle: Text(
             posts[index].body,
             style: const TextStyle(fontSize: 16),
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => PostDetailPage(post: posts[index])));
+          },
         );
       },
       separatorBuilder: (context, index) {

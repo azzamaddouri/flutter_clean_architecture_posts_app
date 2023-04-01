@@ -28,6 +28,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
   }
 
   Widget _buildBody() {
-    return Center(child: Padding(padding: EdgeInsets.all(10) , child:PageDetailWidget()));
+    return Center(child: Padding(padding: EdgeInsets.all(10) , child:PageDetailWidget(post:widget.post)));
   }
 }
