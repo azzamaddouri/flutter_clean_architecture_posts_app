@@ -88,7 +88,7 @@ class PageDetailWidget extends StatelessWidget {
                   title: LoadingWidget(),
                 );
               }
-              return DeleteDialogWidget(postId:post.id);
+              return DeleteDialogWidget(postId:post.id!);
             },
           );
         });
