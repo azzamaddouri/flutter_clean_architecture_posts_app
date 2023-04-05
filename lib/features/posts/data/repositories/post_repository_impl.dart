@@ -14,6 +14,7 @@ typedef Future<Unit> DeleteOrUpdateOrAddPost();
 
 class PostsRepositoryImpl implements PostsRepository {
   final PostRemoteDataSource remoteDataSource;
+  // This is from the local database
   final PostLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   PostsRepositoryImpl({
@@ -27,6 +28,7 @@ class PostsRepositoryImpl implements PostsRepository {
     if (await networkInfo.isConnected) {
       try {
         final remotePosts = await remoteDataSource.getAllPosts();
+        //That's where I cash my data
         localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on ServerException {
