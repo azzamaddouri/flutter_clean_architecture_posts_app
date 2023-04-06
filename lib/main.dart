@@ -7,6 +7,7 @@ import 'features/posts/presentation/pages/posts_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
+  //We need access to the hardware of our device  
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   /*  SharedPreferences sharedPreferences = await SharedPreferences.getInstance(); */
